@@ -11,6 +11,7 @@ body{
 
 h1{
     font-size: 4rem;
+    margin-bottom: 5%;
 }
 
 button{
@@ -47,4 +48,38 @@ li{
     font-size: 1rem;
     margin-left: 10px;
 
+}
+
+.divInput {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    min-height: 0;
+    gap: 20px;
+}
+
+.calendar-container {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+    width: 241px;
+    height: 234px;
+  }
+
+div.container-add {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+}
+
+.desplegar-calendario {
+    margin-top: 0%;
+}
+
+.divInput {
+    display: inline-flex;
+    align-items: start;
 }
