@@ -4,15 +4,15 @@ import Calendar from "./Calendar";
 
 const Home = () => {
 	/*El input estará con un string vacío (""), necesitamos que al escribir se actualice,
-	para eso setNewTask*/
+	para eso setinputTask*/
 
-	/*Hace referencia a lo que escribimos en el input. newTask: representa el estado actual del valor del input,inicialmente será un string vacío (""). setNewTask permite actualizar el estado.*/
-	const [newTask, setNewTask] = useState(""); //Lo que escribimos en el input
-	/*Hace referencia a la lista de tareas, por eso es un array. tasks hace referencia al estado actual de la lista, al principio estará vacía []. setTask permite actualizar la lista
+	/*Hace referencia a lo que escribimos en el input. inputTask: representa el estado actual del valor del input,inicialmente será un string vacío (""). setinputTask permite actualizar el estado.*/
+	const [inputTask, setinputTask] = useState(""); //Lo que escribimos en el input
+	/*Hace referencia a la lista de tareas, por eso es un array. tasksList hace referencia al estado actual de la lista, al principio estará vacía []. setTask permite actualizar la lista
 	a medida que añadamos tareas*/
-	const[ tasks, setTasks ] = useState([]); //La lista que se guarda cuando añadimos la tarea
+	const[ tasksList, setTasksList ] = useState([]); //La lista que se guarda cuando añadimos la tarea
 	
-
+	const [date, setdate] = useState("");
 	/*Función para que al escribir en el input se actualice el valor inicial. Es decir, el valor incicial del cuadrado input es "". Sin esta función
 	no podré escribir. Esta función lo que hace es actualizar el valor inicial "" por lo que yo escriba.*/
 	/*event hace referencia a lo que se introduce en el input*/
@@ -22,51 +22,55 @@ const Home = () => {
 	}
 	*/
 	function handleInputChange(event) {
-		setNewTask(event.target.value);
+		setinputTask(event.target.value);
 	}
+
+	const handledateChange = (e) => {
+        setdate(e.target.value);
+    };
 
 
 	function addTask() {
 		/*Si introduzco un espacio en blanco y pulso Add se guarda como tarea. Para evitar eso lo primero será poner una condición.
-		Si lo que escribimos (newTask), empieza por un espacio, no se podrá añadir.*/
-		if(newTask.trim() !=="") {
-			/*La lista de tareas (setTask) tiene que contener todas las task añadidas (...tasks) + la nueva tarea que hayamos añadido (newTask)*/
-			setTasks([...tasks, newTask]);
+		Si lo que escribimos (inputTask), empieza por un espacio, no se podrá añadir.*/
+		if(inputTask.trim() !=="") {
+			/*La lista de tareas (setTask) tiene que contener todas las task añadidas (...tasksList) + la nueva tarea que hayamos añadido (inputTask)*/
+			setTasksList([...tasksList, {tarea: inputTask, date}]);
 			//Si no "limpiamos" el input, cuando añadamos una tarea se añadirá pero seguirá estando reflejada en el input
-			setNewTask("");
+			setinputTask("");
+			setdate("");
 		}
 	}
 
 	const handleKeyPress = (e) => {
-		if (newTask.trim() !=="" && e.key === 'Enter') {
-			setTasks([...tasks, newTask]); 
-			setNewTask(""); // Limpiar el campo de entrada después de agregar la tarea
-		}
-	  };
+        if (e.key === "Enter" && inputTask.trim() !== "") {
+            addTask();
+        }
+    };
 
 	function deleteTask(index){
-		/*Utilizando filter lo que haremos es filtar la lista de elementos (tasks) y el index que eliminemos no nos lo devolverá*/
-		const updatedTasks = tasks.filter(function(elemento, i){
+		/*Utilizando filter lo que haremos es filtar la lista de elementos (tasksList) y el index que eliminemos no nos lo devolverá*/
+		const updatedtasksList = tasksList.filter(function(elemento, i){
 			return i !== index;
 		});
-		setTasks(updatedTasks);
+		setTasksList(updatedtasksList);
 	}
 
 	function moveTaskUp(index) {
 		if(index > 0) {
-			const updatedTasks = [...tasks];
-			[updatedTasks[index], updatedTasks[index - 1]] = 
-			[updatedTasks[index - 1], updatedTasks[index]]
-			setTasks(updatedTasks);
+			const updatedtasksList = [...tasksList];
+			[updatedtasksList[index], updatedtasksList[index - 1]] = 
+			[updatedtasksList[index - 1], updatedtasksList[index]]
+			setTasksList(updatedtasksList);
 		}
 	}
 
 	function moveTaskDown(index){
-		if(index < tasks.length - 1) {
-			const updatedTasks = [...tasks];
-			[updatedTasks[index], updatedTasks[index + 1]] = 
-			[updatedTasks[index + 1], updatedTasks[index]]
-			setTasks(updatedTasks);
+		if(index < tasksList.length - 1) {
+			const updatedtasksList = [...tasksList];
+			[updatedtasksList[index], updatedtasksList[index + 1]] = 
+			[updatedtasksList[index + 1], updatedtasksList[index]]
+			setTasksList(updatedtasksList);
 		}
 	}
 
@@ -80,15 +84,22 @@ const Home = () => {
 				<input
 					type="text"
 					placeholder="Enter a task..."
-					value={newTask}
+					value={inputTask}
 					onChange={handleInputChange}
 					onKeyDown={handleKeyPress}>
 				</input>
 			</div>
-			{/* CALENDARIO */}
 			<div className="calendar">
-				<Calendar />
+                <input
+                    type="date"
+                    value={date}
+                    onChange={handledateChange}
+                />
 			</div>
+			{/* CALENDARIO */}
+			{/* <div className="calendar">
+				<Calendar />
+			</div> */}
 			{/* BOTÓN ADD */}
 			<div className="container-add">
 				<button
@@ -100,10 +111,12 @@ const Home = () => {
 		</div>
 		{/* LISTA TAREAS AÑADIDAS */}
 		<ol>
-			{tasks.map((task, index) => 
+			{tasksList.map((elemento, index) => 
 				<li key={index}>
 					{/* NOMBRE TAREA */}
-					<span className="text">{task}</span>
+					<span className="text">{elemento.tarea}</span>
+					{/* date */}
+                    <span className="date">{elemento.date}</span> 
 					{/* BOTON FLECHA HACIA ARRIBA */}
 					<button
 						className="up-button"
