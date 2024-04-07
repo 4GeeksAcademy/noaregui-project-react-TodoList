@@ -1,11 +1,13 @@
 import React, {useState} from "react";
-import Calendar from "./Calendar";
+
 
 
 const Home = () => {
 	/*El input estará con un string vacío (""), necesitamos que al escribir se actualice,
 	para eso setinputTask*/
-
+	const handleCategoriaChange = (e) => {
+        setCategoria(e.target.value);
+    };
 	/*Hace referencia a lo que escribimos en el input. inputTask: representa el estado actual del valor del input,inicialmente será un string vacío (""). setinputTask permite actualizar el estado.*/
 	const [inputTask, setinputTask] = useState(""); //Lo que escribimos en el input
 	/*Hace referencia a la lista de tareas, por eso es un array. tasksList hace referencia al estado actual de la lista, al principio estará vacía []. setTask permite actualizar la lista
@@ -13,6 +15,8 @@ const Home = () => {
 	const[ tasksList, setTasksList ] = useState([]); //La lista que se guarda cuando añadimos la tarea
 	
 	const [date, setdate] = useState("");
+
+	const [categoria, setCategoria] = useState("trabajo");
 	/*Función para que al escribir en el input se actualice el valor inicial. Es decir, el valor incicial del cuadrado input es "". Sin esta función
 	no podré escribir. Esta función lo que hace es actualizar el valor inicial "" por lo que yo escriba.*/
 	/*event hace referencia a lo que se introduce en el input*/
@@ -35,7 +39,7 @@ const Home = () => {
 		Si lo que escribimos (inputTask), empieza por un espacio, no se podrá añadir.*/
 		if(inputTask.trim() !=="") {
 			/*La lista de tareas (setTask) tiene que contener todas las task añadidas (...tasksList) + la nueva tarea que hayamos añadido (inputTask)*/
-			setTasksList([...tasksList, {tarea: inputTask, date}]);
+			setTasksList([...tasksList, {tarea: inputTask, categoria, date}]);
 			//Si no "limpiamos" el input, cuando añadamos una tarea se añadirá pero seguirá estando reflejada en el input
 			setinputTask("");
 			setdate("");
@@ -79,6 +83,18 @@ const Home = () => {
 	<div className="to-do-list">
 		<h1>To Do List</h1>
 		<div className="divInput">
+		<select value={categoria} onChange={handleCategoriaChange}>
+                    <span>Cathegory</span>
+					<option value="office">Office</option>
+                    <option value="home">Home</option>
+                    <option value="finance">Finance</option>
+                    <option value="bootcamp">Bootcamp</option>
+					<option value="leisure">Leisure</option>
+        </select>
+		
+			<div>
+
+			</div>
 			{/* INPUT */}
 			<div className="input">
 				<input
@@ -110,34 +126,50 @@ const Home = () => {
 			</div>
 		</div>
 		{/* LISTA TAREAS AÑADIDAS */}
-		<ol>
-			{tasksList.map((elemento, index) => 
-				<li key={index}>
-					{/* NOMBRE TAREA */}
-					<span className="text">{elemento.tarea}</span>
-					{/* date */}
-                    <span className="date">{elemento.date}</span> 
-					{/* BOTON FLECHA HACIA ARRIBA */}
-					<button
-						className="up-button"
-						onClick={() => moveTaskUp(index)}>
-							<i class="fas fa-long-arrow-alt-up"></i>
-					</button>
-					{/* BOTON FLECHA HAHCIA ABAJO */}
-					<button
-						className="down-button"
-						onClick={() => moveTaskDown(index)}>
-							<i class="fas fa-long-arrow-alt-down"></i>
-					</button>
-					{/* BOTON ELIMINAR */}
-					<button
-						className="delete-button"
-						onClick={() => deleteTask(index)}>
-							<i class="fas fa-times"></i>
-					</button>
-				</li>
-			)}
-		</ol>
+		
+			<table class="table">
+				<thead>
+					<tr className="table-titles">
+						<td>Tasks</td>
+						<td>Date</td>
+						<td>Others</td>
+					</tr>
+				</thead>
+				<tbody className="table-body">
+				{tasksList.map((elemento, index) =>					
+					<tr key={index}>					
+						<td className="elementoLista">
+							<span>{elemento.tarea}</span>
+						</td>
+						<td className="elementoFecha">
+							<span>{elemento.date}</span>
+						</td>
+						<td>
+							<button
+									className="up-button"
+									onClick={() => moveTaskUp(index)}>
+									<i class="fas fa-long-arrow-alt-up"></i>
+							</button>
+							{/* BOTON FLECHA HAHCIA ABAJO */}
+								<button
+									className="down-button"
+									onClick={() => moveTaskDown(index)}>
+									<i class="fas fa-long-arrow-alt-down"></i>
+								</button>
+								{/* BOTON ELIMINAR */}
+								<button
+									className="delete-button"
+									onClick={() => deleteTask(index)}>
+									<i class="fas fa-times"></i>
+								</button>
+						</td>
+						
+					</tr>	
+					)}			
+				</tbody>
+			
+			</table>
+		
 
 	</div>
 	

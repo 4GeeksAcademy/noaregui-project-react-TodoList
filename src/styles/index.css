@@ -37,6 +37,7 @@ li{
     margin-bottom: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .text{
@@ -82,4 +83,34 @@ div.container-add {
 .divInput {
     display: inline-flex;
     align-items: start;
+}
+.addedList {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    border-bottom: 1px solid #cccccc00;
+    padding: 10px; 
+    flex-wrap: wrap;
+    gap: 100px;
+    
+}
+.table{
+    margin-top: 5%;
+}
+.table-titles{
+    font-weight: bold;
+    color: white;
+    font-size: 1.2rem;
+}
+
+table-body {
+    display: inline-flex;
+    align-items: center;
+}
+.elementoLista{
+    color: white;
+}
+.elementoFecha {
+    color:white;
 }
