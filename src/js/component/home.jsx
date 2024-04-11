@@ -1,13 +1,9 @@
 import React, {useState} from "react";
 
-
-
 const Home = () => {
 	/*El input estará con un string vacío (""), necesitamos que al escribir se actualice,
 	para eso setinputTask*/
-	const handleCategoriaChange = (e) => {
-        setCategoria(e.target.value);
-    };
+	
 	/*Hace referencia a lo que escribimos en el input. inputTask: representa el estado actual del valor del input,inicialmente será un string vacío (""). setinputTask permite actualizar el estado.*/
 	const [inputTask, setinputTask] = useState(""); //Lo que escribimos en el input
 	/*Hace referencia a la lista de tareas, por eso es un array. tasksList hace referencia al estado actual de la lista, al principio estará vacía []. setTask permite actualizar la lista
@@ -25,7 +21,11 @@ const Home = () => {
 		nombreFuncion(event.target.value)
 	}
 	*/
-	function handleInputChange(event) {
+	const handleCategoriaChange = (e) => {
+        setCategoria(e.target.value);
+    };
+
+	function escribirInput(event) {
 		setinputTask(event.target.value);
 	}
 
@@ -83,28 +83,24 @@ const Home = () => {
 	<div className="to-do-list">
 		<h1>To Do List</h1>
 		<div className="divInput">
-		<select value={categoria} onChange={handleCategoriaChange}>
-                    <span>Cathegory</span>
-					<option value="office">Office</option>
-                    <option value="home">Home</option>
-                    <option value="finance">Finance</option>
-                    <option value="bootcamp">Bootcamp</option>
-					<option value="leisure">Leisure</option>
-        </select>
-		
-			<div>
-
-			</div>
 			{/* INPUT */}
 			<div className="input">
 				<input
 					type="text"
 					placeholder="Enter a task..."
 					value={inputTask}
-					onChange={handleInputChange}
+					onChange={escribirInput}
 					onKeyDown={handleKeyPress}>
 				</input>
 			</div>
+			<select value={categoria} onChange={handleCategoriaChange}>
+						<span>Cathegory</span>
+						<option value="Office">Office</option>
+						<option value="Home">Home</option>
+						<option value="Finance">Finance</option>
+						<option value="Bootcamp">Bootcamp</option>
+						<option value="Leisure">Leisure</option>
+			</select>
 			<div className="calendar">
                 <input
                     type="date"
@@ -126,11 +122,11 @@ const Home = () => {
 			</div>
 		</div>
 		{/* LISTA TAREAS AÑADIDAS */}
-		
 			<table class="table">
 				<thead>
 					<tr className="table-titles">
 						<td>Tasks</td>
+						<td>Cathegory</td>
 						<td>Date</td>
 						<td>Others</td>
 					</tr>
@@ -139,7 +135,10 @@ const Home = () => {
 				{tasksList.map((elemento, index) =>					
 					<tr key={index}>					
 						<td className="elementoLista">
-							<span>{elemento.tarea}</span>
+							{elemento.tarea}
+						</td>
+						<td className="elementoCategoria">
+							<span>{elemento.categoria}</span>
 						</td>
 						<td className="elementoFecha">
 							<span>{elemento.date}</span>
@@ -169,8 +168,6 @@ const Home = () => {
 				</tbody>
 			
 			</table>
-		
-
 	</div>
 	
 	

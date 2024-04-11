@@ -28,7 +28,7 @@ button{
 
 .add-button {
     background-color: rgb(31, 145, 31);
-    margin-left: 2rem;
+    height: 3rem;
 }
 
 li{
@@ -54,7 +54,7 @@ li{
 .divInput {
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     min-height: 0;
     gap: 20px;
 }
@@ -80,10 +80,6 @@ div.container-add {
     margin-top: 0%;
 }
 
-.divInput {
-    display: inline-flex;
-    align-items: start;
-}
 .addedList {
     display: flex; 
     justify-content: center;
@@ -110,7 +106,36 @@ table-body {
 }
 .elementoLista{
     color: white;
+    align-items: center;
+}
+.elementoCategoria{
+    color: white;
 }
 .elementoFecha {
     color:white;
 }
+.input{
+    display: inline-block;
+    
+
+}
+select {
+    width: 10%;
+    height: 2rem;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #333;
+}
+input[type="date"] {
+    height: 2rem;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #333;
+}
+
