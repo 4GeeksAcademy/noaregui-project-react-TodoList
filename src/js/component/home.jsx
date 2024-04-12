@@ -106,7 +106,7 @@ const Home = () => {
                     type="date"
                     value={date}
                     onChange={handledateChange}
-                />
+                ></input>
 			</div>
 			{/* CALENDARIO */}
 			{/* <div className="calendar">
@@ -117,7 +117,7 @@ const Home = () => {
 				<button
 					className="add-button"
 					onClick={addTask}>
-						Add
+					<span>Add</span>
 				</button>
 			</div>
 		</div>
